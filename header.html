@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Responsive E-Store Header</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Responsive Header with Hamburger Menu</title>
+  <link rel="stylesheet" href="css/style.css" />
   <style>
     * {
       margin: 0;
@@ -21,8 +21,8 @@
     header {
       background-color: #1f2937;
       padding: 15px 20px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       position: relative;
+      z-index: 999;
     }
 
     .navbar {
@@ -31,7 +31,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: relative;
     }
 
     .logo a {
@@ -39,11 +38,15 @@
       font-size: 28px;
       font-weight: bold;
       text-decoration: none;
-      transition: color 0.3s;
     }
 
-    .logo a:hover {
-      color: #f59e0b;
+    .hamburger {
+      font-size: 26px;
+      color: #fff;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: none;
     }
 
     .nav-links {
@@ -59,8 +62,7 @@
       font-size: 16px;
       padding: 10px 15px;
       border-radius: 6px;
-      transition: background 0.3s, color 0.3s;
-      display: block;
+      transition: background 0.3s;
     }
 
     .nav-links li a:hover {
@@ -68,7 +70,6 @@
       color: #fff;
     }
 
-    /* Dropdown */
     .dropdown {
       position: relative;
     }
@@ -81,32 +82,24 @@
       padding: 10px 15px;
       cursor: pointer;
       border-radius: 6px;
-      transition: background 0.3s;
-    }
-
-    .dropbtn:hover {
-      background-color: #374151;
-      color: #fff;
     }
 
     .dropdown-content {
       display: none;
       position: absolute;
-      top: 110%;
+      top: 100%;
       left: 0;
       background-color: #1f2937;
       min-width: 160px;
       border-radius: 6px;
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-      z-index: 1000;
     }
 
     .dropdown-content a {
       display: block;
-      color: #d1d5db;
       padding: 12px 16px;
+      color: #d1d5db;
       text-decoration: none;
-      transition: background 0.3s;
     }
 
     .dropdown-content a:hover {
@@ -118,53 +111,33 @@
       display: block;
     }
 
-    /* Hamburger */
-    .hamburger {
-      display: none;
-      font-size: 28px;
-      background: none;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-    }
-
+    /* Mobile styles */
     @media (max-width: 768px) {
       .hamburger {
         display: block;
         position: absolute;
         right: 20px;
         top: 18px;
-        z-index: 1001;
       }
 
       .nav-links {
-        display: none;
         flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
         width: 100%;
         background-color: #1f2937;
-        margin-top: 15px;
+        display: none;
         padding: 10px 0;
-        border-radius: 6px;
       }
 
       .nav-links.show {
         display: flex;
       }
 
-      .nav-links li {
-        width: 100%;
-        text-align: left;
-      }
-
-      .nav-links li a,
-      .dropbtn {
-        width: 100%;
-      }
-
       .dropdown-content {
         position: static;
         box-shadow: none;
-        border-radius: 0;
       }
 
       .dropdown:hover .dropdown-content {
@@ -221,17 +194,19 @@
         navLinks.classList.toggle('show');
       });
 
-      // Mobile dropdown toggle
-      if (window.innerWidth <= 768) {
-        accountDropdown.addEventListener('click', (e) => {
+      // Toggle dropdown for mobile
+      accountDropdown.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768) {
           e.stopPropagation();
           accountDropdown.classList.toggle('open');
-        });
+        }
+      });
 
-        document.addEventListener('click', () => {
+      document.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
           accountDropdown.classList.remove('open');
-        });
-      }
+        }
+      });
     });
   </script>
 </body>
