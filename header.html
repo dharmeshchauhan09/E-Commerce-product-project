@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Common Header</title>
+  <title>Responsive E-Store Header</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
     * {
@@ -22,6 +22,7 @@
       background-color: #1f2937;
       padding: 15px 20px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
     }
 
     .navbar {
@@ -59,6 +60,7 @@
       padding: 10px 15px;
       border-radius: 6px;
       transition: background 0.3s, color 0.3s;
+      display: block;
     }
 
     .nav-links li a:hover {
@@ -90,14 +92,13 @@
     .dropdown-content {
       display: none;
       position: absolute;
-      top: 100%;
+      top: 110%;
       left: 0;
       background-color: #1f2937;
       min-width: 160px;
       border-radius: 6px;
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
       z-index: 1000;
-      overflow: hidden;
     }
 
     .dropdown-content a {
@@ -120,59 +121,57 @@
     /* Hamburger */
     .hamburger {
       display: none;
-      flex-direction: column;
+      font-size: 28px;
+      background: none;
+      border: none;
+      color: #fff;
       cursor: pointer;
-      gap: 5px;
-    }
-
-    .hamburger div {
-      width: 25px;
-      height: 3px;
-      background-color: #fff;
     }
 
     @media (max-width: 768px) {
       .hamburger {
-        display: flex;
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 18px;
+        z-index: 1001;
       }
 
       .nav-links {
         display: none;
         flex-direction: column;
-        background-color: #1f2937;
-        position: absolute;
-        top: 60px;
-        left: 0;
         width: 100%;
-        padding: 15px 20px;
-        gap: 10px;
+        background-color: #1f2937;
+        margin-top: 15px;
+        padding: 10px 0;
+        border-radius: 6px;
       }
 
       .nav-links.show {
         display: flex;
       }
 
-      .nav-links li,
-      .dropdown-content {
+      .nav-links li {
         width: 100%;
+        text-align: left;
       }
 
       .nav-links li a,
       .dropbtn {
         width: 100%;
-        text-align: left;
-      }
-
-      .dropdown:hover .dropdown-content {
-        position: static;
-        display: none;
       }
 
       .dropdown-content {
+        position: static;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      .dropdown:hover .dropdown-content {
         display: none;
       }
 
-      .dropdown.show .dropdown-content {
+      .dropdown.open .dropdown-content {
         display: block;
       }
     }
@@ -185,11 +184,7 @@
         <a href="index.html">E-Store</a>
       </div>
 
-      <div class="hamburger" id="hamburger">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <button class="hamburger" id="hamburger">&#9776;</button>
 
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
@@ -197,8 +192,8 @@
         <li><a href="products.html">Products</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="cart.html">Cart</a></li>
-        <li class="dropdown" id="dropdownMenu">
-          <button class="dropbtn" onclick="toggleDropdown()">Account ▾</button>
+        <li class="dropdown" id="accountDropdown">
+          <button class="dropbtn">Account ▾</button>
           <div class="dropdown-content">
             <a href="login.html" id="loginLink">Login</a>
             <a href="logout.html" id="logoutLink">Logout</a>
@@ -210,19 +205,6 @@
   </header>
 
   <script>
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
-    const dropdownMenu = document.getElementById('dropdownMenu');
-
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('show');
-    });
-
-    function toggleDropdown() {
-      dropdownMenu.classList.toggle('show');
-    }
-
-    // Login/Logout link visibility based on localStorage
     document.addEventListener('DOMContentLoaded', () => {
       const loginLink = document.getElementById('loginLink');
       const logoutLink = document.getElementById('logoutLink');
@@ -230,6 +212,26 @@
 
       loginLink.style.display = isLoggedIn ? 'none' : 'block';
       logoutLink.style.display = isLoggedIn ? 'block' : 'none';
+
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      const accountDropdown = document.getElementById('accountDropdown');
+
+      hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+      });
+
+      // Mobile dropdown toggle
+      if (window.innerWidth <= 768) {
+        accountDropdown.addEventListener('click', (e) => {
+          e.stopPropagation();
+          accountDropdown.classList.toggle('open');
+        });
+
+        document.addEventListener('click', () => {
+          accountDropdown.classList.remove('open');
+        });
+      }
     });
   </script>
 </body>
