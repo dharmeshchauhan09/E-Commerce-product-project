@@ -30,6 +30,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
     }
 
     .logo a {
@@ -116,20 +117,43 @@
       display: block;
     }
 
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+    }
+
     @media (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        align-items: flex-start;
+      .hamburger {
+        display: flex;
       }
 
       .nav-links {
+        display: none;
         flex-direction: column;
+        background-color: #1f2937;
+        position: absolute;
+        top: 60px;
+        left: 0;
         width: 100%;
-        gap: 0;
-        margin-top: 15px;
+        padding: 15px 20px;
+        gap: 10px;
       }
 
-      .nav-links li {
+      .nav-links.show {
+        display: flex;
+      }
+
+      .nav-links li,
+      .dropdown-content {
         width: 100%;
       }
 
@@ -139,8 +163,17 @@
         text-align: left;
       }
 
+      .dropdown:hover .dropdown-content {
+        position: static;
+        display: none;
+      }
+
       .dropdown-content {
-        width: 100%;
+        display: none;
+      }
+
+      .dropdown.show .dropdown-content {
+        display: block;
       }
     }
   </style>
@@ -151,14 +184,21 @@
       <div class="logo">
         <a href="index.html">E-Store</a>
       </div>
-      <ul class="nav-links">
+
+      <div class="hamburger" id="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="products.html">Products</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="cart.html">Cart</a></li>
-        <li class="dropdown">
-          <button class="dropbtn">Account ▾</button>
+        <li class="dropdown" id="dropdownMenu">
+          <button class="dropbtn" onclick="toggleDropdown()">Account ▾</button>
           <div class="dropdown-content">
             <a href="login.html" id="loginLink">Login</a>
             <a href="logout.html" id="logoutLink">Logout</a>
@@ -170,6 +210,19 @@
   </header>
 
   <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+
+    function toggleDropdown() {
+      dropdownMenu.classList.toggle('show');
+    }
+
+    // Login/Logout link visibility based on localStorage
     document.addEventListener('DOMContentLoaded', () => {
       const loginLink = document.getElementById('loginLink');
       const logoutLink = document.getElementById('logoutLink');
