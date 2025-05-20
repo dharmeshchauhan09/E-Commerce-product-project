@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Responsive Header with Hamburger Menu</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Common Header</title>
+  <link rel="stylesheet" href="css/style.css">
   <style>
     * {
       margin: 0;
@@ -21,8 +21,7 @@
     header {
       background-color: #1f2937;
       padding: 15px 20px;
-      position: relative;
-      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .navbar {
@@ -31,6 +30,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
     }
 
     .logo a {
@@ -38,15 +38,11 @@
       font-size: 28px;
       font-weight: bold;
       text-decoration: none;
+      transition: color 0.3s;
     }
 
-    .hamburger {
-      font-size: 26px;
-      color: #fff;
-      background: none;
-      border: none;
-      cursor: pointer;
-      display: none;
+    .logo a:hover {
+      color: #f59e0b;
     }
 
     .nav-links {
@@ -62,7 +58,7 @@
       font-size: 16px;
       padding: 10px 15px;
       border-radius: 6px;
-      transition: background 0.3s;
+      transition: background 0.3s, color 0.3s;
     }
 
     .nav-links li a:hover {
@@ -70,6 +66,7 @@
       color: #fff;
     }
 
+    /* Dropdown */
     .dropdown {
       position: relative;
     }
@@ -82,6 +79,12 @@
       padding: 10px 15px;
       cursor: pointer;
       border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    .dropbtn:hover {
+      background-color: #374151;
+      color: #fff;
     }
 
     .dropdown-content {
@@ -93,13 +96,16 @@
       min-width: 160px;
       border-radius: 6px;
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      overflow: hidden;
     }
 
     .dropdown-content a {
       display: block;
-      padding: 12px 16px;
       color: #d1d5db;
+      padding: 12px 16px;
       text-decoration: none;
+      transition: background 0.3s;
     }
 
     .dropdown-content a:hover {
@@ -111,40 +117,62 @@
       display: block;
     }
 
-    /* Mobile styles */
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+    }
+
     @media (max-width: 768px) {
       .hamburger {
-        display: block;
-        position: absolute;
-        right: 20px;
-        top: 18px;
+        display: flex;
       }
 
       .nav-links {
+        display: none;
         flex-direction: column;
+        background-color: #1f2937;
         position: absolute;
-        top: 100%;
+        top: 60px;
         left: 0;
         width: 100%;
-        background-color: #1f2937;
-        display: none;
-        padding: 10px 0;
+        padding: 15px 20px;
+        gap: 10px;
       }
 
       .nav-links.show {
         display: flex;
       }
 
+      .nav-links li,
       .dropdown-content {
-        position: static;
-        box-shadow: none;
+        width: 100%;
+      }
+
+      .nav-links li a,
+      .dropbtn {
+        width: 100%;
+        text-align: left;
       }
 
       .dropdown:hover .dropdown-content {
+        position: static;
         display: none;
       }
 
-      .dropdown.open .dropdown-content {
+      .dropdown-content {
+        display: none;
+      }
+
+      .dropdown.show .dropdown-content {
         display: block;
       }
     }
@@ -157,7 +185,11 @@
         <a href="index.html">E-Store</a>
       </div>
 
-      <button class="hamburger" id="hamburger">&#9776;</button>
+      <div class="hamburger" id="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
 
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
@@ -165,8 +197,8 @@
         <li><a href="products.html">Products</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="cart.html">Cart</a></li>
-        <li class="dropdown" id="accountDropdown">
-          <button class="dropbtn">Account ▾</button>
+        <li class="dropdown" id="dropdownMenu">
+          <button class="dropbtn" onclick="toggleDropdown()">Account ▾</button>
           <div class="dropdown-content">
             <a href="login.html" id="loginLink">Login</a>
             <a href="logout.html" id="logoutLink">Logout</a>
@@ -178,6 +210,19 @@
   </header>
 
   <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+
+    function toggleDropdown() {
+      dropdownMenu.classList.toggle('show');
+    }
+
+    // Login/Logout link visibility based on localStorage
     document.addEventListener('DOMContentLoaded', () => {
       const loginLink = document.getElementById('loginLink');
       const logoutLink = document.getElementById('logoutLink');
@@ -185,28 +230,6 @@
 
       loginLink.style.display = isLoggedIn ? 'none' : 'block';
       logoutLink.style.display = isLoggedIn ? 'block' : 'none';
-
-      const hamburger = document.getElementById('hamburger');
-      const navLinks = document.getElementById('navLinks');
-      const accountDropdown = document.getElementById('accountDropdown');
-
-      hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('show');
-      });
-
-      // Toggle dropdown for mobile
-      accountDropdown.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768) {
-          e.stopPropagation();
-          accountDropdown.classList.toggle('open');
-        }
-      });
-
-      document.addEventListener('click', () => {
-        if (window.innerWidth <= 768) {
-          accountDropdown.classList.remove('open');
-        }
-      });
     });
   </script>
 </body>
