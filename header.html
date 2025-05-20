@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Common Header</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #1f2937;
+      padding: 15px 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo a {
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .logo a:hover {
+      color: #f59e0b;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-links li a {
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 10px 15px;
+      border-radius: 6px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .nav-links li a:hover {
+      background-color: #374151;
+      color: #fff;
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+    }
+
+    .dropbtn {
+      background: none;
+      border: none;
+      color: #d1d5db;
+      font-size: 16px;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    .dropbtn:hover {
+      background-color: #374151;
+      color: #fff;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #1f2937;
+      min-width: 160px;
+      border-radius: 6px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      overflow: hidden;
+    }
+
+    .dropdown-content a {
+      display: block;
+      color: #d1d5db;
+      padding: 12px 16px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #374151;
+      color: #fff;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+        margin-top: 15px;
+      }
+
+      .nav-links li {
+        width: 100%;
+      }
+
+      .nav-links li a,
+      .dropbtn {
+        width: 100%;
+        text-align: left;
+      }
+
+      .dropdown-content {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html">E-Store</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li class="dropdown">
+          <button class="dropbtn">Account ▾</button>
+          <div class="dropdown-content">
+            <a href="login.html" id="loginLink">Login</a>
+            <a href="logout.html" id="logoutLink">Logout</a>
+            <a href="change-password.html">Change Password</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginLink = document.getElementById('loginLink');
+      const logoutLink = document.getElementById('logoutLink');
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+      loginLink.style.display = isLoggedIn ? 'none' : 'block';
+      logoutLink.style.display = isLoggedIn ? 'block' : 'none';
+    });
+  </script>
+</body>
+</html>

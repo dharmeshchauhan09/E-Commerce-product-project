@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>Product Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #333;
+      color: #fff;
+      padding: 15px 0;
+      text-align: center;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+    .product-details {
+      max-width: 900px;
+      background: #fff;
+      margin: 30px auto;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .product-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      align-items: flex-start;
+    }
+    .product-image {
+      max-width: 300px;
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .product-description {
+      flex: 1;
+      min-width: 280px;
+    }
+    .product-description p,
+    .product-description h2 {
+      margin: 12px 0;
+    }
+    .product-description h2 {
+      font-size: 2rem;
+      color: #111827;
+    }
+    .product-description p {
+      font-size: 16px;
+      color: #374151;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-right: 15px;
+    }
+    .btn-cart {
+      background-color: #007bff;
+      color: white;
+    }
+    .btn-cart:hover {
+      background-color: #0056b3;
+    }
+    .btn-buy {
+      background-color: #28a745;
+      color: white;
+    }
+    .btn-buy:hover {
+      background-color: #218838;
+    }
+    @media (max-width: 600px) {
+      .product-info {
+        flex-direction: column;
+        align-items: center;
+      }
+      .product-description {
+        min-width: unset;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+  <!-- <header>
+    <nav>
+      <ul>
+        <li><a href="products.html">Back to Products</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </ul>
+    </nav>
+  </header> -->
+
+  <section class="product-details" id="productDetails">
+    <!-- JavaScript will inject product info here -->
+  </section>
+
+  <script>
+    // Copy the same 25 products array from products.html:
+    const products = [
+      { id: 1, name: "Wireless Headphones", price: 1999, description: "High quality wireless headphones with noise cancellation and 20 hours battery life.", category: "Electronics", brand: "SoundPro", image: "Bluetooth Headphones.webp" },
+      { id: 2, name: "Winter Jacket", price: 1499, description: "Warm and stylish winter jacket, perfect for cold weather.", category: "Clothing", brand: "NorthWind", image: "Winter Jacket.jpg" },
+      { id: 3, name: "Kitchen Blender", price: 999, description: "Powerful blender for smoothies, soups, and more.", category: "Home Appliance", brand: "BlendMaster", image: "Kitchen Blender.jpg" },
+      { id: 4, name: "Skin Care Kit", price: 299, description: "Complete skin care kit with cleanser, moisturizer, and sunscreen.", category: "Beauty", brand: "CarePro", image: "Skin Care Kit.webp" },
+      { id: 5, name: "Self Help Book", price: 199, description: "Inspiring self help book for personal growth and development.", category: "Books", brand: "MotivateMe", image: "Self Help Book.jpg" },
+      { id: 6, name: "Smartphone", price: 19999, description: "Latest smartphone with advanced features and 5G connectivity.", category: "Electronics", brand: "TechMaster", image: "Smartphone.jpg" },
+      { id: 7, name: "Gaming Mouse", price: 599, description: "High-performance gaming mouse with customizable buttons and ergonomic design.", category: "Gaming", brand: "GamingGear", image: "Gaming Mouse.jpg" },
+      { id: 8, name: "Backpack", price: 1099, description: "Durable and stylish backpack for school or travel.", category: "Luggage", brand: "AdventureGear", image: "backpack.jpg" },
+      { id: 9, name: "Wrist Watch", price: 1299, description: "Stylish and functional wrist watch with date and time display.", category: "Accessories", brand: "WatchMaster", image: "Wrist Watch.jpg" },
+      { id: 10, name: "Yoga Mat", price: 499, description: "High-quality yoga mat for comfortable and safe practice.", category: "Fitness", brand: "YogaPro", image: "Yoga Mat.jpg" },
+      { id: 11, name: "Bluetooth Speaker", price: 2499, description: "Portable and waterproof Bluetooth speaker with long battery life.", category: "Electronics", brand: "SoundTech", image: "Bluetooth Speaker.webp" },
+      { id: 12, name: "Sunglasses", price: 199, description: "Stylish and protective sunglasses for outdoor activities.", category: "Accessories", brand: "SunGuard", image: "sunglasses.jpg" },
+      { id: 13, name: "Laptop Stand", price: 999, description: "Ergonomic and adjustable laptop stand for comfortable working.", category: "Electronics", brand: "TechStand", image: "Laptop Stand.jpg" },
+      { id: 14, name: "Digital Camera", price: 16999, description: "High-quality digital camera with advanced features and long battery life.", category: "Electronics", brand: "CamMaster", image: "Digital Camera.jpg" },
+      { id: 15, name: "Fitness Tracker", price: 3999, description: "Advanced fitness tracker with heart rate monitoring and long battery life.", category: "Fitness", brand: "FitPro", image: "Fitness Tracker.webp" },
+      { id: 16, name: "Notebook Set", price: 20, description: "Set of high-quality notebooks with various colors and designs.", category: "Office Supplies", brand: "NoteMaster", image: "Notebook Set.jpg" },
+      { id: 17, name: "Office Chair", price: 6999, description: "Ergonomic and adjustable office chair for comfortable working.", category: "Furniture", brand: "ChairMaster", image: "Office Chair.webp" },
+      { id: 18, name: "Sneakers", price: 1299, description: "High-quality sneakers with advanced features and comfortable design.", category: "Footwear", brand: "ShoeMaster", image: "Sneakers.jpg" },
+      { id: 19, name: "LED Desk Lamp", price: 299, description: "Energy-efficient LED desk lamp with adjustable brightness.", category: "Home Appliance", brand: "LampPro", image: "LED Desk Lamp.webp" },
+      { id: 20, name: "Wireless Charger", price: 799, description: "Fast and efficient wireless charger for your devices.", category: "Electronics", brand: "ChargeMaster", image: "Wireless Charger.webp" },
+      { id: 21, name: "Hand Mixer", price: 1999, description: "Easy-to-use hand mixer for various baking tasks.", category: "Kitchen Appliance", brand: "MixMaster", image: "Hand Mixer.webp" },
+      { id: 22, name: "Men's Wallet", price: 399, description: "Stylish and durable men's wallet made of premium leather.", category: "Accessories", brand: "WalletPro", image: "Men's Wallet.webp" },
+      { id: 23, name: "Electric Toothbrush", price: 2399, description: "Professional electric toothbrush with multiple cleaning modes.", category: "Beauty", brand: "ToothMaster", image: "Electric Toothbrush.webp" },
+      { id: 24, name: "Hair Dryer", price: 599, description: "Fast and efficient hair dryer with adjustable heat settings.", category: "Beauty", brand: "DryMaster", image: "Hair Dryer.webp" },
+      { id: 25, name: "Table Clock", price: 99, description: "Simple and elegant table clock for your desk or nightstand.", category: "Home Appliance", brand: "ClockMaster", image: "Table Clock.webp" }
+    ];
+
+    // Helper to get URL param
+    function getProductIdFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("product");
+    }
+
+    function displayProductDetails(product) {
+      const container = document.getElementById("productDetails");
+      container.innerHTML = `
+        <h2>${product.name}</h2>
+        <div class="product-info">
+<img src="${product.image}" alt="${product.name}" class="product-image" />
+          <div class="product-description">
+            <p><strong>Price:</strong> ₹${product.price.toFixed(2)}</p>
+            <p><strong>Description:</strong> ${product.description}</p>
+            <p><strong>Category:</strong> ${product.category}</p>
+            <p><strong>Brand:</strong> ${product.brand}</p>
+            <div class="buttons">
+              <button class="btn-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+              <button class="btn-buy" onclick="buyNow(${product.id})">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function displayNotFound() {
+      const container = document.getElementById("productDetails");
+      container.innerHTML = `
+        <p style="font-size:18px; text-align:center; color:#888;">
+          Product not found.
+        </p>
+      `;
+    }
+
+    function addToCart(id) {
+      const product = products.find(p => p.id === id);
+      if (!product) return;
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Product added to cart!");
+    }
+
+    function buyNow(id) {
+      // Redirect to payment.html with the product ID
+      window.location.href = `payment.html?product=${id}`;
+    }
+
+    // On page load:
+    window.onload = () => {
+      const productId = getProductIdFromURL();
+      if (!productId) {
+        displayNotFound();
+        return;
+      }
+      const prod = products.find(p => p.id === parseInt(productId));
+      if (prod) {
+        displayProductDetails(prod);
+      } else {
+        displayNotFound();
+      }
+    };
+  </script>
+
+  <div id="footer"></div>
+  <script src="index.js"></script>
+</body>
+</html>
