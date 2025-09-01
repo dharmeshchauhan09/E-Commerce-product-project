@@ -10,30 +10,24 @@
     body {
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      background-color: #f9fafb;
+      background: url("cart.avif") repeat;
+      background-size: 400px;
       color: #1f2937;
-    }
-
-    header {
-      background: #232f3e;
-      color: white;
-      padding: 1.2rem;
-      text-align: center;
-      font-size: 1.5rem;
     }
 
     main {
       max-width: 1000px;
       margin: 2rem auto;
-      background: white;
+      background: rgba(255, 255, 255, 0.95); /* transparent white for readability */
       padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
 
     h2 {
       text-align: center;
       margin-bottom: 1.5rem;
+      color: #232f3e;
     }
 
     table {
@@ -143,7 +137,7 @@
 </head>
 <body>
   <div id="header"></div>
-  <!-- <header>Shopping Cart</header> -->
+
   <main>
     <h2>Your Cart Items</h2>
     <table>
@@ -175,7 +169,6 @@
     { id: 3, name: "Kitchen Blender", price: 5999, image: "assets/images/Kitchen Blender.jpg", quantity: 1 }
   ];
 
-  // Initialize localStorage if empty
   if (!localStorage.getItem("cart")) {
     localStorage.setItem("cart", JSON.stringify(sampleCart));
   }
@@ -208,34 +201,29 @@
 
     document.querySelector('.total').textContent = `₹${grandTotal}`;
 
-    // Quantity change handler
     document.querySelectorAll('.qty').forEach(input => {
       input.addEventListener('input', e => {
         const index = e.target.dataset.index;
         const newQty = Math.max(1, parseInt(e.target.value) || 1);
         cart[index].quantity = newQty;
 
-        // Update localStorage
         localStorage.setItem('cart', JSON.stringify(cart));
 
-        // Update item total immediately
         const itemTotalElement = document.querySelector(`.item-total[data-index="${index}"]`);
         const itemTotal = cart[index].price * newQty;
         itemTotalElement.textContent = `₹${itemTotal}`;
 
-        // Update grand total
         const newGrandTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
         document.querySelector('.total').textContent = `₹${newGrandTotal}`;
       });
     });
 
-    // Remove button handler
     document.querySelectorAll('.remove-btn').forEach(btn => {
       btn.addEventListener('click', e => {
         const index = e.target.dataset.index;
         cart.splice(index, 1);
         localStorage.setItem('cart', JSON.stringify(cart));
-        loadCart(); // Reload the cart
+        loadCart();
       });
     });
   }
@@ -243,7 +231,6 @@
   window.onload = () => {
     loadCart();
 
-    // Attach event listener for Proceed to Payment button
     const proceedBtn = document.getElementById('proceedToPayment');
     proceedBtn.addEventListener('click', () => {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -251,9 +238,7 @@
         alert('Your cart is empty. Please add items before proceeding to payment.');
         return;
       }
-      // Save cart to sessionStorage for payment processing
       sessionStorage.setItem('cartForPayment', JSON.stringify(cart));
-      // Redirect to payment page
       window.location.href = 'payment.html';
     });
   };
